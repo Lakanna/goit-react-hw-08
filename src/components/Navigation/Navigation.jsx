@@ -7,8 +7,8 @@ export const Navigation = () => {
       <NavLink className={css.link} to="/">
         Home
       </NavLink>
-      <NavLink className={css.link} to="/tasks">
-        Tasks
+      <NavLink className={css.link} to="/contacts">
+        Contacts
       </NavLink>
     </nav>
   );
