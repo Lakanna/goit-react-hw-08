@@ -12,10 +12,10 @@ export const LoginForm = () => {
   const passwordFieldId = useId();
 
   const handleLogin = (values, actions) => {
-    console.log(values);
     dispatch(logIn(values));
     actions.resetForm();
   };
+
   return (
     <Formik initialValues={initialValues} onSubmit={handleLogin}>
       <Form className={css.form}>
