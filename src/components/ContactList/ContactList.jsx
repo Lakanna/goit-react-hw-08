@@ -1,9 +1,16 @@
 import { useSelector } from "react-redux";
-import { selectFilteredContacts } from "../../redux/contacts/selectors";
+import {
+  selectFilteredContacts,
+  selectFilteredContactsByNumber,
+} from "../../redux/contacts/selectors";
 import Contact from "../Contact/Contact";
 
 export default function ContactList() {
-  const contacts = useSelector(selectFilteredContacts);
+  const selectByName = useSelector(selectFilteredContacts);
+  const selectByNumber = useSelector(selectFilteredContactsByNumber);
+
+  const contacts =
+    selectByName.length > selectByNumber.length ? selectByNumber : selectByName;
 
   return (
     <>
@@ -13,3 +20,5 @@ export default function ContactList() {
     </>
   );
 }
+
+// lilu@net.com

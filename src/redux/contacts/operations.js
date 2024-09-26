@@ -1,7 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 axios.defaults.baseURL = "https://connections-api.goit.global";
+
+const notifyAddContact = () => toast.success("Contact successfully added");
+const notifyDeleteContact = () => toast.success("Contact successfully deleted");
 
 export const fetchContacts = createAsyncThunk(
   "contacts/fetchAll",
@@ -25,9 +29,8 @@ export const addContact = createAsyncThunk(
   "contacts/addContact",
   async (contact, thunkAPI) => {
     try {
-      console.log(contact, "contact");
       const respons = await axios.post("/contacts", { ...contact });
-      console.log(respons.data, "respons");
+      notifyAddContact();
       return respons.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -40,6 +43,7 @@ export const deleteContact = createAsyncThunk(
   async (contactId, thunkAPI) => {
     try {
       const respons = await axios.delete(`/contacts/${contactId}`);
+      notifyDeleteContact();
       return respons.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

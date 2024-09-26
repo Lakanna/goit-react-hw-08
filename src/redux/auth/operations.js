@@ -1,7 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 axios.defaults.baseURL = "https://connections-api.goit.global/";
+
+const notify = () => toast.error("Invalid email or password. Try again");
 
 // ** add JWT
 const setAuthHeader = (token) => {
@@ -42,6 +45,7 @@ export const logIn = createAsyncThunk(
       setAuthHeader(res.data.token);
       return res.data;
     } catch (error) {
+      notify();
       return thunkAPI.rejectWithValue(error.message);
     }
   }

@@ -10,6 +10,7 @@ import { selectIsRefreching } from "../../redux/auth/selectors";
 import { refreshUser } from "../../redux/auth/operations";
 import { RestrictedRoute } from "../RestrictedRoute/RestrictedRoute";
 import { PrivateRoute } from "../PrivateRoute/PrivateRoute";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,6 +51,7 @@ function App() {
           }
         />
       </Routes>
+      <Toaster />
     </Layout>
   );
 }
