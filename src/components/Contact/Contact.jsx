@@ -45,7 +45,7 @@ export default function Contact({ contact }) {
       >
         Delete
       </button>
-      <button type="button" onClick={() => openModal()}>
+      <button className={css.btnEdit} type="button" onClick={() => openModal()}>
         Edit contact
       </button>
 

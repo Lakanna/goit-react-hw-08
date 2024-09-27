@@ -12,7 +12,6 @@ export default function ContactForm({ currentContact, onCloseModal }) {
   const dispatch = useDispatch();
   const fieldNameId = useId();
   const fieldNumberId = useId();
-  console.log(currentContact, "currentContact in form");
 
   const FeedbackSchema = Yup.object().shape({
     name: Yup.string()
@@ -26,7 +25,6 @@ export default function ContactForm({ currentContact, onCloseModal }) {
 
   function handleSubmit(values, actions) {
     const newContact = { ...values };
-    console.log(currentContact, "cureent cont in handleSubmit");
 
     if (currentContact) {
       dispatch(editContact({ ...values, id: currentContact.id }));
