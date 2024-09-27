@@ -60,7 +60,6 @@ export const editContact = createAsyncThunk(
   async ({ id, name, number }, thunkAPI) => {
     try {
       const resp = await axios.patch(`/contacts/${id}`, { name, number });
-      console.log(resp.data);
       notifyEditContact(name);
       return resp.data;
     } catch (error) {
