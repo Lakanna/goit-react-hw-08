@@ -1,25 +1,29 @@
 import css from "./Contact.module.css";
 import { MdPhone } from "react-icons/md";
 import { IoPerson } from "react-icons/io5";
-import { useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/contacts/operations";
 import { useState } from "react";
-import ModalWindow from "../Modal/ModalWindow";
+import ModalWindow from "../ModalWindow/ModalWindow";
 
-export default function Contact({ contact: { name, number, id } }) {
-  const dispatch = useDispatch();
+export default function Contact({ contact }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [deleteContactModal, setdeleteContactModal] = useState(false);
+  const [editContactModal, seteditContactModal] = useState(false);
+  const { name, number } = contact;
 
-  function openModal() {
+  function openModal(param) {
+    if (param === "deleteBtn") {
+      setdeleteContactModal(true);
+    } else {
+      seteditContactModal(true);
+    }
     setModalIsOpen(true);
   }
+
   function closeModal() {
     setModalIsOpen(false);
+    setdeleteContactModal(false);
+    seteditContactModal(false);
   }
-
-  const onDelete = (id) => {
-    dispatch(deleteContact(id));
-  };
 
   return (
     <div className={css.contactBox}>
@@ -33,15 +37,25 @@ export default function Contact({ contact: { name, number, id } }) {
           <p>{number}</p>
         </div>
       </div>
-      <button className={css.btnDelete} onClick={openModal}>
+
+      <button
+        type="button"
+        className={css.btnDelete}
+        onClick={() => openModal("deleteBtn")}
+      >
         Delete
       </button>
+      <button type="button" onClick={() => openModal()}>
+        Edit contact
+      </button>
+
       {modalIsOpen === true && (
         <ModalWindow
           onCloseModal={closeModal}
           modalIsOpen={modalIsOpen}
-          deleteContact={onDelete}
-          id={id}
+          contact={contact}
+          deleteContactModal={deleteContactModal}
+          editContactModal={editContactModal}
         />
       )}
     </div>

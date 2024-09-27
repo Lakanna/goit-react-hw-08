@@ -4,8 +4,12 @@ import toast from "react-hot-toast";
 
 axios.defaults.baseURL = "https://connections-api.goit.global";
 
-const notifyAddContact = () => toast.success("Contact successfully added");
-const notifyDeleteContact = () => toast.success("Contact successfully deleted");
+const notifyAddContact = (name) =>
+  toast.success(`Contact ${name} successfully added`);
+const notifyDeleteContact = (name) =>
+  toast.success(`Contact ${name} successfully deleted`);
+const notifyEditContact = (name) =>
+  toast.success(`Contact ${name} successfully edited`);
 
 export const fetchContacts = createAsyncThunk(
   "contacts/fetchAll",
@@ -30,7 +34,7 @@ export const addContact = createAsyncThunk(
   async (contact, thunkAPI) => {
     try {
       const respons = await axios.post("/contacts", { ...contact });
-      notifyAddContact();
+      notifyAddContact(respons.data.name);
       return respons.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -43,8 +47,22 @@ export const deleteContact = createAsyncThunk(
   async (contactId, thunkAPI) => {
     try {
       const respons = await axios.delete(`/contacts/${contactId}`);
-      notifyDeleteContact();
+      notifyDeleteContact(respons.data.name);
       return respons.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const editContact = createAsyncThunk(
+  "contacts/editContact",
+  async ({ id, name, number }, thunkAPI) => {
+    try {
+      const resp = await axios.patch(`/contacts/${id}`, { name, number });
+      console.log(resp.data);
+      notifyEditContact(name);
+      return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

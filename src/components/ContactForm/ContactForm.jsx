@@ -3,15 +3,16 @@ import { Formik, Form, Field } from "formik";
 import { ErrorMessage } from "formik";
 
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contacts/operations";
+import { addContact, editContact } from "../../redux/contacts/operations";
 
 import * as Yup from "yup";
 import css from "./ContactForm.module.css";
 
-export default function ContactForm() {
+export default function ContactForm({ currentContact, onCloseModal }) {
   const dispatch = useDispatch();
   const fieldNameId = useId();
   const fieldNumberId = useId();
+  console.log(currentContact, "currentContact in form");
 
   const FeedbackSchema = Yup.object().shape({
     name: Yup.string()
@@ -25,15 +26,21 @@ export default function ContactForm() {
 
   function handleSubmit(values, actions) {
     const newContact = { ...values };
+    console.log(currentContact, "cureent cont in handleSubmit");
 
-    dispatch(addContact(newContact));
-
-    actions.resetForm();
+    if (currentContact) {
+      dispatch(editContact({ ...values, id: currentContact.id }));
+      onCloseModal();
+    } else {
+      dispatch(addContact(newContact));
+      currentContact = null;
+      actions.resetForm();
+    }
   }
 
   return (
     <Formik
-      initialValues={{ name: "", number: "" }}
+      initialValues={currentContact ? currentContact : { name: "", number: "" }}
       onSubmit={handleSubmit}
       validationSchema={FeedbackSchema}
     >
@@ -58,7 +65,7 @@ export default function ContactForm() {
         <ErrorMessage className={css.errorText} name="number" component="p" />
 
         <button className={css.formaBtn} type="submit">
-          Add contact
+          {currentContact ? "Edit contact" : "Add contact"}
         </button>
       </Form>
     </Formik>
