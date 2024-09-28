@@ -34,7 +34,8 @@ export default function Contact({ contact }) {
         </div>
         <div className={css.contactData}>
           <MdPhone style={{ width: 20, height: 20 }} />
-          <p>{number}</p>
+          <a href={"tel: $ {number}"}>{number}</a>
+          {/* <p>{number}</p> */}
         </div>
       </div>
 

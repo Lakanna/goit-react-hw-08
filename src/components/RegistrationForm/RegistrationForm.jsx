@@ -69,6 +69,7 @@ export const RegistrationForm = () => {
           name="password"
           id={passwordFieldId}
           className={css.input}
+          placeholder="Min 7 characters"
         />
         <ErrorMessage className={css.errorText} name="password" component="p" />
         <button type="submit" className={css.submitButton}>
